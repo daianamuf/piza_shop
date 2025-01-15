@@ -27,8 +27,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('pizzas', PizzaController::class);
 });
 
-Route::get('/', [PizzaController::class, 'index'])->name('dashboard'); // Dashboard
-Route::get('/cart', [PizzaController::class, 'viewCart'])->name('cart.view'); // Cart Page
+Route::get('/', [PizzaController::class, 'index'])->name('dashboard');
+Route::get('/cart', [PizzaController::class, 'viewCart'])->name('cart.view');
+
+Route::post('/cart/order', [PizzaController::class, 'placeOrder'])->middleware('auth')->name('cart.order');
 
 
 

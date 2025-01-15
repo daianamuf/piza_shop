@@ -75,8 +75,36 @@ class PizzaController extends Controller
         ]);
     }
 
-   
+    public function placeOrder(Request $request)
+    {
+        $cart = Session::get('cart', []);
+    
+        if (empty($cart)) {
+            return back()->with('error', 'Your cart is empty.');
+        }
+    
+        foreach ($cart as $pizzaId => $item) {
+            \App\Models\Order::create([
+                'user_id' => Auth::id(),
+                'pizza_id' => $pizzaId,
+                'pizza_name' => $item['name'],
+                'quantity' => $item['quantity'],
+                'total_price' => $item['price'] * $item['quantity'], // Price for this row
+            ]);
+        }
+    
+        // Clear the cart
+        Session::forget('cart');
+    
+        return back()->with('success', 'Your order has been placed successfully.');
+    }
+    
 
+    public function viewOrders()
+    {
+        $orders = \App\Models\Order::where('user_id', Auth::id())->get();
+        return view('orders.index', compact('orders'));
+    }
     
 }
 

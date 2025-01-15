@@ -15,4 +15,14 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user_id', // Add this
+        'total_price', // Add any other attributes being assigned
+    ];
 }
