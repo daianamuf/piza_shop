@@ -28,6 +28,7 @@ export default function Dashboard({ pizzas }) {
                         <h3 className="text-lg font-bold">{pizza.name}</h3>
                         <p>{pizza.ingredients}</p>
                         <p>${pizza.price}</p>
+                        <img src={pizza.image_url} alt={pizza.name} />
                         {isInCart(pizza.id) ? (
                             <div className="flex items-center mt-2">
                                 <button

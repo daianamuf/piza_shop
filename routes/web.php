@@ -7,30 +7,38 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-
+// Home
 Route::get('/', [PizzaController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Dashboard
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [PizzaController::class, 'index'])->name('dashboard');
+});
 
-Route::middleware('auth')->group(function () {
+// Profile Management
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/pizzas', [PizzaController::class, 'index'])->name('pizzas.index');
-
+// Pizza Management
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [PizzaController::class, 'index'])->name('dashboard');
-    Route::resource('pizzas', PizzaController::class);
+    Route::resource('pizzas', PizzaController::class)->except(['show']);
+    Route::get('/pizzas/manage', [PizzaController::class, 'manage'])->name('pizzas.manage');
+    Route::post('/pizzas/manage', [PizzaController::class, 'storeAll'])->name('pizzas.storeAll');
+    Route::put('/pizzas/manage', [PizzaController::class, 'updateAll'])->name('pizzas.updateAll');
 });
 
-Route::get('/', [PizzaController::class, 'index'])->name('dashboard');
-Route::get('/cart', [PizzaController::class, 'viewCart'])->name('cart.view');
+// Cart and Orders
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cart', [PizzaController::class, 'viewCart'])->name('cart.view');
+    Route::post('/cart/order', [PizzaController::class, 'placeOrder'])->name('cart.order');
+});
 
-Route::post('/cart/order', [PizzaController::class, 'placeOrder'])->middleware('auth')->name('cart.order');
+Route::post('/cart/order', [PizzaController::class, 'placeOrder'])
+    ->middleware('auth')
+    ->name('cart.order');
 
 
 
