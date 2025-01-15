@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('pizzas', function (Blueprint $table) {
             $table->id();
+            $table->string('name'); // Add this if it was missing
+            $table->text('description')->nullable(); // Add for ingredients or descriptions
+            $table->decimal('price', 8, 2); // Add this if it was missing
             $table->timestamps();
         });
     }

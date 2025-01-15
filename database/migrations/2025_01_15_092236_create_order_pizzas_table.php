@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('order_pizzas', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+        $table->foreignId('order_id')->constrained()->onDelete('cascade'); // Reference to orders table
+        $table->foreignId('pizza_id')->constrained()->onDelete('cascade'); // Reference to pizzas table
+        $table->integer('quantity')->default(1); // Quantity of pizzas
+        $table->timestamps(); // Created at and updated at
         });
     }
 
