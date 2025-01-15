@@ -1,48 +1,61 @@
+import React from "react";
+import { useCart } from "../CartContext";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
 
-export default function Dashboard({ pizzas, user }) {
+export default function Dashboard({ pizzas }) {
+    const { cart, dispatch } = useCart();
+
+    const addToCart = (pizza) => {
+        dispatch({ type: "ADD_TO_CART", payload: pizza });
+    };
+
+    const incrementQuantity = (id) => {
+        dispatch({ type: "INCREMENT_QUANTITY", payload: { id } });
+    };
+
+    const decrementQuantity = (id) => {
+        dispatch({ type: "DECREMENT_QUANTITY", payload: { id } });
+    };
+
+    const isInCart = (id) => cart[id];
+
     return (
         <AuthenticatedLayout>
-            <div style={{ height: "500px" }}>
-                <h1 className="mb-8  text-xl font-semibold md:text-3xl">
-                    The best pizza.
-                    <br />
-                    <span className="text-yellow-500">
-                        Straight out of the oven, straight to you.
-                    </span>
-                </h1>
-                <div>
-                    {user ? (
-                        <span>Welcome, {user.name}!</span>
-                    ) : (
-                        <a href="/login" className="text-blue-500">
-                            Login
-                        </a>
-                    )}
-                </div>
-
-                <div className="divide-y divide-stone-200 px-2">
-                    {pizzas.map((pizza) => (
-                        <div key={pizza.id} className="flex gap-4 py-2">
-                            <img
-                                src={
-                                    pizza.image_url ||
-                                    "https://via.placeholder.com/150"
-                                }
-                                alt={pizza.name}
-                                className="h-24"
-                            />
-                            <div className="flex grow flex-col pt-1">
-                                <h3 className="font-medium">{pizza.name}</h3>
-                                <p className="text-sm capitalize italic text-stone-500">
-                                    {pizza.ingredients}
-                                </p>
-                                <p className="text-sm">${pizza.price}</p>
+            <h1 className="text-2xl font-bold">Pizza Dashboard</h1>
+            <div className="grid grid-cols-3 gap-4 mt-4">
+                {pizzas.map((pizza) => (
+                    <div key={pizza.id} className="p-4 border rounded">
+                        <h3 className="text-lg font-bold">{pizza.name}</h3>
+                        <p>{pizza.ingredients}</p>
+                        <p>${pizza.price}</p>
+                        {isInCart(pizza.id) ? (
+                            <div className="flex items-center mt-2">
+                                <button
+                                    onClick={() => decrementQuantity(pizza.id)}
+                                    className="px-2 py-1 bg-yellow-500 text-white rounded"
+                                >
+                                    -
+                                </button>
+                                <span className="mx-2">
+                                    {cart[pizza.id].quantity}
+                                </span>
+                                <button
+                                    onClick={() => incrementQuantity(pizza.id)}
+                                    className="px-2 py-1 bg-yellow-500 text-white rounded"
+                                >
+                                    +
+                                </button>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ) : (
+                            <button
+                                onClick={() => addToCart(pizza)}
+                                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+                            >
+                                Add to Order
+                            </button>
+                        )}
+                    </div>
+                ))}
             </div>
         </AuthenticatedLayout>
     );

@@ -27,7 +27,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('pizzas', PizzaController::class);
 });
 
-Route::post('/cart/add', [PizzaController::class, 'addToCart'])->name('cart.add');
+Route::get('/', [PizzaController::class, 'index'])->name('dashboard'); // Dashboard
+Route::get('/cart', [PizzaController::class, 'viewCart'])->name('cart.view'); // Cart Page
+
+
 
 
 require __DIR__.'/auth.php';

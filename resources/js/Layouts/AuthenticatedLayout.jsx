@@ -21,6 +21,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <Link href="/">
                                     {/* <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" /> */}
                                 </Link>
+                                <Link
+                                    href="/cart"
+                                    className="btn btn-secondary"
+                                >
+                                    View Cart
+                                </Link>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex font-mono">
