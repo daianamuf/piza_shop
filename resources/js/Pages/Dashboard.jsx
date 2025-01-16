@@ -16,10 +16,18 @@ export default function Dashboard({ pizzas }) {
     };
 
     // Decrement the quantity of a pizza in the cart
+    // const decrementQuantity = (id) => {
+    //     dispatch({ type: "DECREMENT_QUANTITY", payload: { id } });
+    // };
     const decrementQuantity = (id) => {
-        dispatch({ type: "DECREMENT_QUANTITY", payload: { id } });
+        if (cart[id].quantity === 1) {
+            // If the quantity is 1, remove the item from the cart
+            dispatch({ type: "REMOVE_FROM_CART", payload: { id } });
+        } else {
+            // Otherwise, decrement the quantity
+            dispatch({ type: "DECREMENT_QUANTITY", payload: { id } });
+        }
     };
-
     // Check if a pizza is in the cart
     const isInCart = (id) => !!cart[id];
 

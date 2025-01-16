@@ -33,7 +33,7 @@ const cartReducer = (state, action) => {
         }
         case "DECREMENT_QUANTITY": {
             const itemId = action.payload.id;
-            if (state[itemId].quantity <= 1) return state; // Prevent quantity from going below 1
+            if (state[itemId].quantity <= 0) return state;
             return {
                 ...state,
                 [itemId]: {
