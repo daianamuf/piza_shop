@@ -1,10 +1,10 @@
-# Pizza Shop
+# Pizza Shop 🍕
 
 Welcome to the **Pizza Shop**! This application allows users to browse, manage, and order pizzas. It features a fully interactive dashboard, cart management, and user authentication.
 
 ---
 
-## Table of Contents
+## Table of Contents 🍕
 
 -   [Description](#description)
 -   [Features](#features)
@@ -15,7 +15,7 @@ Welcome to the **Pizza Shop**! This application allows users to browse, manage, 
 
 ---
 
-## Description
+## Description 🍕
 
 The Pizza Shop application is a full-stack web application that provides an intuitive interface for customers to:
 
@@ -30,7 +30,7 @@ It also includes management features for admins to:
 
 ---
 
-## Features
+## Features 🍕
 
 ### User Features
 
@@ -57,7 +57,7 @@ It also includes management features for admins to:
 
 ---
 
-## Technologies Used
+## Technologies Used 🍕
 
 -   **Frontend**:
     -   React
@@ -68,12 +68,13 @@ It also includes management features for admins to:
     -   MySQL
     -   PHP
 -   **Other**:
+
     -   Axios (for API calls)
     -   Laravel's Session and Middleware
 
----
+-   React Context was used for state management to maintain the cart state across the application. The state is synced with the backend to ensure consistency and persistence of the cart data.
 
-## Setup and Installation
+## Setup and Installation 🍕
 
 ### Prerequisites
 
@@ -132,7 +133,7 @@ It also includes management features for admins to:
 
 ---
 
-## API Endpoints
+## API Endpoints 🍕
 
 ### Public Endpoints
 
@@ -159,7 +160,7 @@ It also includes management features for admins to:
 
 ---
 
-## Usage
+## Usage 🍕
 
 ### User Flow
 
@@ -177,7 +178,7 @@ It also includes management features for admins to:
 
 ---
 
-## Additional Information
+## Additional Information 🍕
 
 ### Database Schema
 
@@ -202,7 +203,3 @@ It also includes management features for admins to:
 ### Error Handling
 
 The application includes validation for inputs at both frontend and backend levels. Custom error messages are returned for invalid operations (e.g., empty cart during order placement).
-
----
-
-Enjoy using the Pizza Shop application! 🍕
