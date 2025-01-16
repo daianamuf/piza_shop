@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useCart } from "../CartContext";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 
 export default function Cart() {
     const { cart, dispatch } = useCart();
     const { post } = useForm(); // Use Inertia's form submission
     const [message, setMessage] = useState(""); // Local message state for feedback
+    const { props } = usePage();
+    const userId = props.auth.user.id;
+
+    console.log("User ID from Inertia:", userId);
 
     // Calculate total price
     const calculateTotal = () =>
@@ -17,31 +21,23 @@ export default function Cart() {
 
     // Handle order placement
     const handleOrder = () => {
-        // Prepare cart items for the backend
-        const cartItems = Object.entries(cart).map(([id, item]) => ({
-            pizza_id: id,
-            quantity: item.quantity,
-        }));
+        const totalPrice = calculateTotal();
+        const payload = { user_id: userId, total_price: totalPrice };
 
-        // Send POST request to place the order
-        post(
-            "/cart/order", // Backend route
-            { items: cartItems }, // Payload
-            {
-                onSuccess: () => {
-                    // Clear cart in local state
-                    Object.keys(cart).forEach((id) =>
-                        dispatch({ type: "REMOVE_FROM_CART", payload: { id } })
-                    );
-                    // Display success message
-                    setMessage("Your order has been placed successfully.");
-                },
-                onError: () => {
-                    // Handle errors
-                    setMessage("There was an issue placing your order.");
-                },
-            }
-        );
+        post("/cart", payload, {
+            onSuccess: () => {
+                console.log("Order placed successfully!");
+                dispatch({ type: "EMPTY_CART" });
+                setMessage("Your order has been placed successfully.");
+            },
+            onError: (error) => {
+                console.error("Order Error:", error);
+                const errorMessage =
+                    error.response?.data?.message ||
+                    "There was an issue placing your order.";
+                setMessage(errorMessage);
+            },
+        });
     };
 
     return (
@@ -56,7 +52,6 @@ export default function Cart() {
                     </div>
                 )}
 
-                {/* Cart items */}
                 {Object.keys(cart).length > 0 ? (
                     <div>
                         {Object.entries(cart).map(([id, item]) => (
@@ -92,7 +87,9 @@ export default function Cart() {
                                         +
                                     </button>
                                 </div>
-                                <p>${item.price * item.quantity}</p>
+                                <p>
+                                    ${(item.price * item.quantity).toFixed(2)}
+                                </p>
                                 <button
                                     onClick={() =>
                                         dispatch({

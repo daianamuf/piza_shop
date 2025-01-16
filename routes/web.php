@@ -33,14 +33,9 @@ Route::middleware(['auth'])->group(function () {
 // Cart and Orders
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [PizzaController::class, 'viewCart'])->name('cart.view');
-    Route::post('/cart/order', [PizzaController::class, 'placeOrder'])->name('cart.order');
+    Route::post('/cart', [PizzaController::class, 'placeOrder'])->name('cart.order');
 });
 
-Route::post('/cart/order', [PizzaController::class, 'placeOrder'])
-    ->middleware('auth')
-    ->name('cart.order');
-
-
-
+Route::post('/cart/update', [PizzaController::class, 'updateCart'])->name('cart.update');
 
 require __DIR__.'/auth.php';

@@ -1,59 +1,80 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { useEffect, useReducer, createContext } from "react";
+import axios from "axios";
 
-// Cart Context
 const CartContext = createContext();
 
-// Reducer to manage cart actions
 const cartReducer = (state, action) => {
     switch (action.type) {
         case "ADD_TO_CART": {
-            const pizza = action.payload;
-            const existingItem = state[pizza.id];
-
+            const item = action.payload;
             return {
                 ...state,
-                [pizza.id]: {
-                    ...pizza,
-                    quantity: existingItem ? existingItem.quantity + 1 : 1,
-                },
-            };
-        }
-        case "INCREMENT_QUANTITY": {
-            const { id } = action.payload;
-            return {
-                ...state,
-                [id]: {
-                    ...state[id],
-                    quantity: state[id].quantity + 1,
-                },
-            };
-        }
-        case "DECREMENT_QUANTITY": {
-            const { id } = action.payload;
-            if (state[id].quantity === 1) return state;
-
-            return {
-                ...state,
-                [id]: {
-                    ...state[id],
-                    quantity: state[id].quantity - 1,
+                [item.id]: {
+                    ...item,
+                    quantity: (state[item.id]?.quantity || 0) + 1,
                 },
             };
         }
         case "REMOVE_FROM_CART": {
-            const { id } = action.payload;
-            const newState = { ...state };
-            delete newState[id];
-            return newState;
+            const { [action.payload.id]: _, ...rest } = state;
+            return rest;
+        }
+        case "EMPTY_CART":
+            return {};
+        case "INCREMENT_QUANTITY": {
+            const itemId = action.payload.id;
+            return {
+                ...state,
+                [itemId]: {
+                    ...state[itemId],
+                    quantity: state[itemId].quantity + 1,
+                },
+            };
+        }
+        case "DECREMENT_QUANTITY": {
+            const itemId = action.payload.id;
+            if (state[itemId].quantity <= 1) return state; // Prevent quantity from going below 1
+            return {
+                ...state,
+                [itemId]: {
+                    ...state[itemId],
+                    quantity: state[itemId].quantity - 1,
+                },
+            };
         }
         default:
             return state;
     }
 };
 
-// Cart Provider
 export const CartProvider = ({ children }) => {
     const [cart, dispatch] = useReducer(cartReducer, {});
+
+    // Sync cart to backend whenever the cart changes
+    useEffect(() => {
+        const syncCartWithBackend = async () => {
+            try {
+                if (Object.keys(cart).length === 0) return; // Skip sync if the cart is empty
+
+                const payload = {
+                    cart: Object.values(cart).map((item) => ({
+                        id: item.id,
+                        quantity: item.quantity,
+                    })),
+                };
+
+                console.log("Syncing Cart Payload:", payload);
+
+                await axios.post("/cart/update", payload, {
+                    headers: { "Content-Type": "application/json" },
+                });
+            } catch (error) {
+                console.error("Error syncing cart with backend:", error);
+            }
+        };
+
+        syncCartWithBackend();
+    }, [cart]); // Sync only when the cart changes
 
     return (
         <CartContext.Provider value={{ cart, dispatch }}>
@@ -62,5 +83,4 @@ export const CartProvider = ({ children }) => {
     );
 };
 
-// Hook to use the cart
-export const useCart = () => useContext(CartContext);
+export const useCart = () => React.useContext(CartContext);

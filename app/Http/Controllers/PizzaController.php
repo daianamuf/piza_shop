@@ -129,11 +129,61 @@ class PizzaController extends Controller
 
     // Place an order
     public function placeOrder(Request $request)
-    {
-        // Clear the cart from the session
-        Session::forget('cart');
+{
+    $validatedData = $request->validate([
+        'user_id' => 'required|integer',
+        'total_price' => 'required|numeric',
+    ]);
 
-        // Return a success message
-        return back()->with('success', 'Order placed successfully!');
+    // Retrieve cart from the session
+    $cart = Session::get('cart', []);
+
+    if (empty($cart)) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Cart is empty.',
+        ], 400);
     }
+
+    // Create a new order
+    $order = Order::create([
+        'user_id' => $validatedData['user_id'],
+        'total_price' => $validatedData['total_price'],
+        'status' => 'pending',
+    ]);
+
+    // Clear cart after placing the order
+    Session::forget('cart');
+
+    return response()->json([
+        'success' => true,
+        'order' => $order,
+    ]);
+}
+
+
+public function updateCart(Request $request)
+{
+    if (!$request->has('cart')) {
+        return response()->json([
+            'success' => false,
+            'message' => 'The cart field is required but not found.',
+        ], 422);
+    }
+
+    $validated = $request->validate([
+        'cart' => 'required|array',
+        'cart.*.id' => 'required|integer|exists:pizzas,id',
+        'cart.*.quantity' => 'required|integer|min:1',
+    ]);
+
+    Session::put('cart', $validated['cart']);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Cart updated successfully',
+    ]);
+}
+
+
 }
