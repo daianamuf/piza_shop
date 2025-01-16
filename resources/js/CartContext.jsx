@@ -54,7 +54,7 @@ export const CartProvider = ({ children }) => {
     useEffect(() => {
         const syncCartWithBackend = async () => {
             try {
-                if (Object.keys(cart).length === 0) return; // Skip sync if the cart is empty
+                if (Object.keys(cart).length === 0) return;
 
                 const payload = {
                     cart: Object.values(cart).map((item) => ({

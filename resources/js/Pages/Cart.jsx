@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useCart } from "../CartContext";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useForm, usePage } from "@inertiajs/react";
+import axios from "axios";
 
 export default function Cart() {
     const { cart, dispatch } = useCart();
@@ -22,7 +23,7 @@ export default function Cart() {
         const totalPrice = calculateTotal();
         const payload = { user_id: userId, total_price: totalPrice };
 
-        post("/cart", payload, {
+        axios.post("/cart", payload, {
             headers: {
                 Accept: "application/json",
             },

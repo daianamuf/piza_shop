@@ -16,9 +16,6 @@ export default function Dashboard({ pizzas }) {
     };
 
     // Decrement the quantity of a pizza in the cart
-    // const decrementQuantity = (id) => {
-    //     dispatch({ type: "DECREMENT_QUANTITY", payload: { id } });
-    // };
     const decrementQuantity = (id) => {
         if (cart[id].quantity === 1) {
             // If the quantity is 1, remove the item from the cart
