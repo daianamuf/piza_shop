@@ -1,66 +1,208 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Pizza Shop
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Welcome to the **Pizza Shop**! This application allows users to browse, manage, and order pizzas. It features a fully interactive dashboard, cart management, and user authentication.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [Description](#description)
+-   [Features](#features)
+-   [Technologies Used](#technologies-used)
+-   [Setup and Installation](#setup-and-installation)
+-   [API Endpoints](#api-endpoints)
+-   [Usage](#usage)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Description
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+The Pizza Shop application is a full-stack web application that provides an intuitive interface for customers to:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   Browse available pizzas
+-   Add pizzas to a shopping cart
+-   Place an order
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+It also includes management features for admins to:
 
-## Laravel Sponsors
+-   Create, update, and delete pizzas
+-   Bulk manage pizzas
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## Features
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### User Features
 
-## Contributing
+-   **Dashboard**: Browse available pizzas, view details, and add them to the cart.
+-   **Cart Management**:
+    -   Add items to the cart
+    -   Update quantities
+    -   Remove items
+-   **Order Placement**: Submit an order for pizzas in the cart.
+-   **Authentication**:
+    -   Register an account
+    -   Log in
+    -   Manage profile
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Admin Features
 
-## Code of Conduct
+-   **Pizza Management**:
+    -   Create new pizzas
+    -   Edit existing pizzas
+    -   Delete pizzas
+-   **Bulk Management**:
+    -   Bulk create multiple pizzas
+    -   Bulk update pizzas
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Technologies Used
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   **Frontend**:
+    -   React
+    -   Inertia.js
+    -   Tailwind CSS / Bootstrap
+-   **Backend**:
+    -   Laravel
+    -   MySQL
+    -   PHP
+-   **Other**:
+    -   Axios (for API calls)
+    -   Laravel's Session and Middleware
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Setup and Installation
+
+### Prerequisites
+
+-   PHP >= 8.0
+-   Composer
+-   Node.js and npm
+-   MySQL database
+
+### Steps
+
+1. **Clone the repository**:
+
+    ```bash
+    git clone <repository-url>
+    cd pizza-shop
+    ```
+
+2. **Install dependencies**:
+
+    ```bash
+    composer install
+    npm install
+    ```
+
+3. **Set up environment variables**:
+   Copy the `.env.example` file and configure it for your environment.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    Update the `.env` file with your database credentials.
+
+4. **Run migrations**:
+
+    ```bash
+    php artisan migrate
+    ```
+
+5. **Seed the database (optional)**:
+
+    ```bash
+    php artisan db:seed
+    ```
+
+6. **Build frontend assets**:
+
+    ```bash
+    npm run dev
+    ```
+
+7. **Start the application**:
+    ```bash
+    php artisan serve
+    ```
+
+---
+
+## API Endpoints
+
+### Public Endpoints
+
+-   `GET /`: Home page
+
+### Authenticated Endpoints
+
+-   **Dashboard**:
+    -   `GET /dashboard`: View all pizzas
+-   **Cart**:
+    -   `GET /cart`: View the cart
+    -   `POST /cart`: Place an order
+    -   `POST /cart/update`: Update cart items
+
+### Admin Endpoints
+
+-   **Pizzas**:
+    -   `GET /pizzas`: View all pizzas
+    -   `POST /pizzas`: Add a new pizza
+    -   `PUT /pizzas/{id}`: Update a pizza
+    -   `DELETE /pizzas/{id}`: Delete a pizza
+    -   `POST /pizzas/manage`: Bulk create pizzas
+    -   `PUT /pizzas/manage`: Bulk update pizzas
+
+---
+
+## Usage
+
+### User Flow
+
+1. Visit the homepage and log in or register an account.
+2. Navigate to the dashboard to browse pizzas.
+3. Add pizzas to the cart and adjust quantities as needed.
+4. Place an order from the cart page.
+5. View your profile and manage personal details.
+
+### Admin Flow
+
+1. Log in with admin credentials.
+2. Access the pizza management dashboard to add, edit, or delete pizzas.
+3. Use the bulk management interface for faster updates.
+
+---
+
+## Additional Information
+
+### Database Schema
+
+-   **Pizzas**:
+
+    -   `id`: Integer (Primary Key)
+    -   `name`: String
+    -   `ingredients`: Text
+    -   `price`: Decimal
+    -   `image_url`: String
+
+-   **Orders**:
+
+    -   `id`: Integer (Primary Key)
+    -   `user_id`: Foreign Key
+    -   `total_price`: Decimal
+    -   `status`: String
+
+-   **Users**:
+    -   Default Laravel User schema
+
+### Error Handling
+
+The application includes validation for inputs at both frontend and backend levels. Custom error messages are returned for invalid operations (e.g., empty cart during order placement).
+
+---
+
+Enjoy using the Pizza Shop application! 🍕
