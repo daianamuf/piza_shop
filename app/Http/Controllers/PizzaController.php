@@ -25,6 +25,12 @@ class PizzaController extends Controller
         ]);
     }
 
+    public function showHome()
+{
+  
+    return Inertia::render('Home');
+}
+
     // View form to create a pizza
     public function create()
     {

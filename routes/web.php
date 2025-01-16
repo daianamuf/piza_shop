@@ -8,7 +8,8 @@ use Inertia\Inertia;
 
 
 // Home
-Route::get('/', [PizzaController::class, 'index'])->name('home');
+Route::get('/', [PizzaController::class, 'showHome'])->name('home');
+
 
 // Dashboard
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -28,24 +28,28 @@ export default function Dashboard({ pizzas }) {
             <div className="container mx-auto px-4">
                 <h1 className="text-2xl font-bold mb-6">Pizza Dashboard</h1>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div className="divide-y divide-stone-200 px-2">
                     {pizzas.map((pizza) => (
-                        <div
-                            key={pizza.id}
-                            className="p-4 border rounded shadow-md bg-white"
-                        >
+                        <div key={pizza.id} className="flex gap-4 py-2">
                             <img
                                 src={pizza.image_url}
                                 alt={pizza.name}
-                                className="w-full h-40 object-cover rounded mb-4"
+                                className="h-24 rounded mb-4"
                             />
-                            <h3 className="text-lg font-bold">{pizza.name}</h3>
-                            <p className="text-gray-600">{pizza.ingredients}</p>
-                            <p className="text-lg font-semibold mt-2">
-                                ${pizza.price}
-                            </p>
+                            <div className="flex grow flex-col pt-0.5">
+                                <h3 className="text-lg font-bold">
+                                    {pizza.name}
+                                </h3>
+                                <p className="text-sm capitalize italic text-stone-500">
+                                    {pizza.ingredients}
+                                </p>
+                                <p className="text-sm font-semibold mt-2">
+                                    ${pizza.price}
+                                </p>
+                            </div>
+
                             {isInCart(pizza.id) ? (
-                                <div className="flex items-center justify-center mt-4">
+                                <div className="flex items-center gap-3 sm:gap-8">
                                     <button
                                         onClick={() =>
                                             decrementQuantity(pizza.id)
@@ -69,7 +73,7 @@ export default function Dashboard({ pizzas }) {
                             ) : (
                                 <button
                                     onClick={() => addToCart(pizza)}
-                                    className="mt-4 w-full px-4 py-2 bg-blue-500 text-white rounded"
+                                    className="px-2 bg-orange-500 text-white rounded"
                                 >
                                     Add to Order
                                 </button>
